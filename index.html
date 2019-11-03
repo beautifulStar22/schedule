@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="dist/jquery.schedule.css">
     <link rel="stylesheet" href="dist/jquery.schedule-demo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -20,27 +23,36 @@
 <main>
     <div class="container">
         <div class="row">
-            <div class="col pl-0">
-                <h2>Normal Schedule</h2>
-            </div>
-            <div class="col pr-0">
-                <div class="btn-group mb-3 d-flex justify-content-end">
-                    <button type="button" class="jqs-shift-options btn btn-primary pr-5 pl-5 " value="export" id="export">Add</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col">
                 <div class="row">
+                    <div class="col pl-0">
+                        <h2>Normal Schedule</h2>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="btn-group mb-3 d-flex justify-content-end">
+                            <button type="button" class="jqs-shift-options btn btn-primary pr-5 pl-5 " value="export" id="export">Add</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div id="schedule" class="col-9 jqs-demo"></div>
-                    <div class="col-3 jqs_options pt-0">
+                    <!-- <div class="col-3 jqs_options pt-0">
                         <p class="shift_add_method_title p-3 mb-0">Click the Add button to add new shift</p>
                         <div class="shift-options">
                             <div class="shift-title pt-3 pb-3 pr-0">Shift Details</div>
                             <div class="shift-name p-3">
                                 <p>Name</p>
-                                <input class="form-control dinningName" type="text" placeholder="Dinning Name">
-                                <input class="form-control jqs-color-picker mt-3" type="color" value="#007bff" disabled onchange="alert('Your Color is setted correctly!')" placeholder="Default input">
+                                <div class="dropdown">
+                                    <button type="button" class="drop-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                      DinningName
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item breakfast-btn" href="#">Breakfast</a>
+                                      <a class="dropdown-item lunch-btn" href="#">Lunch</a>
+                                      <a class="dropdown-item dinner-btn" href="#">Dinner</a>
+                                    </div>
+                                </div>                        
+                                <input class="form-control jqs-color-picker mt-3" type="color" value="#007bff" disabled placeholder="Default input">
                             </div>
                             <div class="shift-range p-3">
                                 <div class="d-flex justify-content-between mb-2">
@@ -61,7 +73,7 @@
                             <div class="setting p-3"><p class="setting_button p-3 mb-0">Capacity Settings</p></div>
                             <div class="last-seating"><p class="p-3 mb-0">Last Seating</p><br></div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>        
@@ -72,20 +84,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="dist/jquery.schedule.js"></script>
 
+
 <script>
 
   $(document).ready(function() {
 
     add();
-    // attrSetting();
-
-    // function attrSetting() {
-    //   $('.jqs-period-container').mouseenter(function() {
-    //     var dinningName = $('.jqs-period-title').text()
-    //     alert(dinningName)
-    //     $('.dinningName').html(dinningName);
-    //   })
-    // }
 
     function add() {
       var flag=1;

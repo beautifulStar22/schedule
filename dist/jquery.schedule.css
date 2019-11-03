@@ -39,6 +39,7 @@
   border-collapse: collapse;
   border-spacing: 0;
   box-sizing: content-box;
+  
 }
 .jqs-table td,
 .jqs-table th {
@@ -196,8 +197,9 @@
 .jqs-options {
   position: absolute;
   top: 0;
-  left: 0;
-  z-index: 50;
+  left: 100%;
+  height: 100%;
+  /* z-index: 50; */
   background: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -222,19 +224,23 @@
 }
 
 .jqs-options-time {
-  font-size: 11px;
+  margin-bottom: 20px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 16px;
   letter-spacing: -0.5px;
   color: #000;
 }
+
+
 .jqs-options-title {
-  width: 220px;
-  font-size: 11px;
+  width: 208px;
+  /* font-size: 11px; */
   border: none;
   border-bottom: 1px solid #333;
-  margin-bottom: 16px;
-  margin-right: 36px;
+  margin: 20px 0;
+  font-size: 15px;
+  font-weight: 700;
 }
 .jqs-options-color {
   display: inline-block;
@@ -243,9 +249,10 @@
   border-width: 1px;
   height: 25px;
   font-size: 11px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   margin-right: 4px;
   cursor: pointer;
+  
 }
 .jqs-options-duplicate, .jqs-options-remove {
   display: inline-block;
@@ -299,7 +306,8 @@
 }
 
 p {
-  font-size: 0.9rem;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .shift-name {
@@ -313,4 +321,12 @@ p {
 .jqs_options {
   border: 1px solid grey;
   border-left: none;
+}
+
+.drop-btn, .dropdown-menu {
+  width: 100%;
+}
+
+.dropdown-menu {
+  background-color: bisque;
 }

@@ -457,28 +457,29 @@
       $this.closeOptions();
 
       // popup position
-      var maxHeight = 850;
-      var top = period.offset().top - $(this.element).offset().top + $(this.element).scrollTop() - 20;
-      if (top < 20) {
-        top = 20;
-      }
-      if (top > maxHeight) {
-        top = maxHeight;
-      }
+      // var maxHeight = 850;
+      // var top = period.offset().top - $(this.element).offset().top + $(this.element).scrollTop() - 20;
+      // if (top < 20) {
+      //   top = 20;
+      // }
+      // if (top > maxHeight) {
+      //   top = maxHeight;
+      // }
 
-      var maxWidth = $(this.element).width() - 290;
-      var left = period.offset().left - $(this.element).offset().left + period.width() + 20;
-      if (left > maxWidth) {
-        left = left - 330 - period.width();
-      }
+      // var maxWidth = $(this.element).width() - 290;
+      // var left = period.offset().left - $(this.element).offset().left + period.width() + 20;
+      // if (left > maxWidth) {
+      //   left = left - 330 - period.width();
+      // }
 
       // time
       var position = Math.round(period.position().top / this.periodPosition);
       var height = Math.round(period.height() / this.periodPosition);
-      var time = '<div class="jqs-options-time">' + this.periodInit(position, position + height) + '</div>';
+      var time = '<div class="jqs-options-time">Time:&nbsp&nbsp&nbsp' + this.periodInit(position, position + height) + '</div>';
 
       // title
       var title = $('jqs-period-title', period).text();
+      var dinningName ='<div class="jqs-options-name">Shift Name</div>'
       var titleInput = '<div class="jqs-options-title-container">' +
         '<input type="text" placeholder="' + this.settings.periodTitlePlaceholder +
         '" value="' + title + '" class="jqs-options-title"></div>';
@@ -488,7 +489,7 @@
       if (this.settings.periodColors && this.settings.periodColors.length > 0) {
         var colorText = (this.settings.hour === 12) ? 'favorite' : '00:00';
 
-        colorInput = '<div class="jqs-options-color-container">';
+        colorInput = '<div class="jqs-options-color-container"><p>Color Pan:</p>';
         $.each(this.settings.periodColors, function (index, color) {
           colorInput += '<button class="jqs-options-color" ' +
             'style="background-color: ' + color[0] + '; border-color: ' + color[1] + '; color:' + color[2] + '">' +
@@ -501,10 +502,7 @@
       var remove = '<div class="jqs-options-remove">' + this.settings.periodRemoveButton + '</div>';
       var duplicate = '<div class="jqs-options-duplicate">' + this.settings.periodDuplicateButton + '</div>';
       var close = '<div class="jqs-options-close"></div>';
-      $('<div class="jqs-options">' + time + titleInput + colorInput + remove + duplicate + close + '</div>').css({
-        top: top,
-        left: left
-      }).appendTo(this.element);
+      $('<div class="jqs-options">'+ dinningName + titleInput + time + colorInput + remove + duplicate + close + '</div>').appendTo(this.element);
       // var shift_title = '<div class="jqs-shift-title">Shift Details</div>';
       // $('.jqs_options').html(shift_title + time + titleInput + colorInput + remove + duplicate + close)
 
