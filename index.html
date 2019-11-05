@@ -12,77 +12,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
 <header>
-    <nav class="navbar navbar-dark bg-dark mb-3">
+    <nav class="navbar navbar-dark bg-dark">
         <h1 class="navbar-brand mb-0">Restuarant Schedule</h1>
     </nav>
 </header>
 <main>
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="row">
-                    <div class="col pl-0">
-                        <h2>Normal Schedule</h2>
-                    </div>
-                    <div class="col pr-0">
-                        <div class="btn-group mb-3 d-flex justify-content-end">
-                            <button type="button" class="jqs-shift-options btn btn-primary pr-5 pl-5 " value="export" id="export">Add</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div id="schedule" class="col-9 jqs-demo"></div>
-                    <!-- <div class="col-3 jqs_options pt-0">
-                        <p class="shift_add_method_title p-3 mb-0">Click the Add button to add new shift</p>
-                        <div class="shift-options">
-                            <div class="shift-title pt-3 pb-3 pr-0">Shift Details</div>
-                            <div class="shift-name p-3">
-                                <p>Name</p>
-                                <div class="dropdown">
-                                    <button type="button" class="drop-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                      DinningName
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item breakfast-btn" href="#">Breakfast</a>
-                                      <a class="dropdown-item lunch-btn" href="#">Lunch</a>
-                                      <a class="dropdown-item dinner-btn" href="#">Dinner</a>
-                                    </div>
-                                </div>                        
-                                <input class="form-control jqs-color-picker mt-3" type="color" value="#007bff" disabled placeholder="Default input">
-                            </div>
-                            <div class="shift-range p-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <p class="d-flex align-items-center m-0">Min Party Size</p>
-                                    <p class="min-size">1</p>
-                                </div> 
-                                <div class="d-flex justify-content-between mt-2">
-                                    <p class="d-flex align-items-center m-0">Max Party Size</p>
-                                    <p class="max-size">8</p>
-                                </div>
-                            </div>
-                            <div class="shift-range p-3">
-                                <div class="d-flex justify-content-between">
-                                    <p class="d-flex align-items-center m-0">Max Convers</p>
-                                    <p class="max-covers">100</p>
-                                </div>
-                            </div>
-                            <div class="setting p-3"><p class="setting_button p-3 mb-0">Capacity Settings</p></div>
-                            <div class="last-seating"><p class="p-3 mb-0">Last Seating</p><br></div>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
-        </div>        
+          <div class="col p-0">
+              <div id="schedule" class=" jqs-demo"></div>
+          </div>     
     </div>
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="dist/jquery.schedule.js"></script>
+
 
 
 <script>
@@ -94,50 +44,21 @@
     function add() {
       var flag=1;
       $('#schedule').jqs();
-      $('.jqs-shift-options').click(function () {
-
-        $('.shift_add_method_title').hide();
-        $('.shift-options').css('display', 'block');
+      $('.add-shift-btn').click(function () {
 
         var data = JSON.parse($('#schedule').jqs('export'));
-        var periodTitle = 'Shift1';
+        var periodTitle = 'Shift';
         for(i=0;i<=6;i++){
-          switch(flag){
-            case 1:
-              periodTitle = 'Breakfast';
-              data.push(
-                {
-                  day: i,
-                  periods: [
-                    ['2:00am', '4:00am']// -6 hours 
-                  ]
-                }
-              );
-              break;
-            case 2: 
-              periodTitle = 'Lunch'
-              data.push(
-                {
-                  day: i,
-                  periods: [
-                    ['4:30am', '8:00am']// -6 hours 
-                  ]
-                }
-              );
-              break;
-            case 3:
-              periodTitle = 'Dinner'
-              data.push(
-                {
-                  day: i,
-                  periods: [
-                    ['8:30am', '1:00pm']// -6 hours 
-                  ]
-                }
-              );
-              break;
+            data.push(
+              {
+                day: i,
+                periods: [
+                  ['5:00am', '7:00am']// -6 hours 
+                ]
+              }
+            )
           }
-          $('#schedule').replaceWith('<div id="schedule" class="col-9 jqs-demo"></div>');
+          $('#schedule').replaceWith('<div id="schedule" class="jqs-demo"></div>');
           $('#schedule').jqs({
             mode: 'edit',
             periodOptions: true,
@@ -145,11 +66,7 @@
             data: data
           });
         }
-        flag++
-        if(flag==4){
-          flag=1;
-        }
-      })
+      )
     }
   })
 </script>

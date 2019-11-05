@@ -7,16 +7,36 @@ body,
 html {
   margin: 0;
   padding: 0;
-  background: #fefefe;
+  background: black;
   font-family: system, -apple-system, Roboto, Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;
 }
 
 #schedule {
   border: 1px solid grey;
+  width: 100%;
+  min-width: 500px;
+  padding: 40px 20px 40px 60px;
+  background-color: white;
 
 }
 
 textarea {
   width: 100%;
   height: 80px;
+}
+
+.container {
+  background-color: darkgrey;
+}
+
+main {
+  margin-top: 15px;
+}
+
+
+
+@media only screen and (max-width:875px) {
+  #schedule {
+    width: 100%;
+  }
 }
