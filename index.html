@@ -49,14 +49,37 @@
         var data = JSON.parse($('#schedule').jqs('export'));
         var periodTitle = 'Shift';
         for(i=0;i<=6;i++){
-            data.push(
-              {
-                day: i,
-                periods: [
-                  ['5:00am', '7:00am']// -6 hours 
-                ]
-              }
-            )
+          switch(flag){
+            case 1:
+              data.push(
+                {
+                  day: i,
+                  periods: [
+                    ['5:00am', '7:00am']// -6 hours 
+                  ]
+                }
+              );
+              break;
+            case 2: 
+              data.push(
+                {
+                  day: i,
+                  periods: [
+                    ['8:00am', '10:00am']// -6 hours  
+                  ]
+                }
+              );
+              break;
+            case 3:
+              data.push(
+                {
+                  day: i,
+                  periods: [
+                    ['10:30am', '12:30pm']// -6 hours 
+                  ]
+                }
+              );
+              break;
           }
           $('#schedule').replaceWith('<div id="schedule" class="jqs-demo"></div>');
           $('#schedule').jqs({
@@ -66,7 +89,11 @@
             data: data
           });
         }
-      )
+        flag++
+        if(flag==4){
+          flag=1;
+        }
+      })
     }
   })
 </script>

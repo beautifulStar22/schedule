@@ -113,6 +113,12 @@
   width: 100%;
   min-height: 10px;
 }
+
+.jqs-mouse-container {
+  margin-top: auto;
+    width: 90%;
+    height: 90%;
+}
 .jqs-period:hover .jqs-period-remove, .jqs-period:hover .jqs-period-duplicate {
   display: block;
 }

@@ -57,6 +57,7 @@
 
   var periodBtnToggle = false;
   var addBtnToggle = false;
+  var week_position = 0;
 
   $.extend(Plugin.prototype, {
     /**
@@ -126,63 +127,61 @@
         var position = 0;
         var helper = false;
 
-        $(this.element).on('mousedown', '.jqs-day', function (event) {
-          var offset = event.pageY - $(this).offset().top;
-          position = Math.floor(offset / $this.periodPosition);
+        // $(this.element).on('mousedown', '.jqs-day', function (event) {
+        //   var offset = event.pageY - $(this).offset().top;
+        //   position = Math.floor(offset / $this.periodPosition);
 
-          if (!$(event.target).hasClass('jqs-period') && $(event.target).parents('.jqs-period').length === 0) {
-            var time = '';
-            if ($this.settings.periodDuration !== 15) {
-              time = $this.periodInit(position, position + 1);
-            }
+        //   if (!$(event.target).hasClass('jqs-period') && $(event.target).parents('.jqs-period').length === 0) {
+        //     var time = '';
+        //     if ($this.settings.periodDuration !== 15) {
+        //       time = $this.periodInit(position, position + 1);
+        //     }
 
-            helper = $('<div>').addClass('jqs-period-helper').css({
-              'height': $this.periodPosition,
-              'top': position * $this.periodPosition
-            }).append('<div class="jqs-period-helper-time">' + time + '</div>');
+        //     helper = $('<div>').addClass('jqs-period-helper').css({
+        //       'height': $this.periodPosition,
+        //       'top': position * $this.periodPosition
+        //     }).append('<div class="jqs-period-helper-time">' + time + '</div>');
 
-            $(this).append(helper);
-          }
-        });
+        //     $(this).append(helper);
+        //   }
+        // });
 
-        $(this.element).on('mousemove', '.jqs-day', function (event) {
-          if (helper) {
-            var offset = event.pageY - $(this).offset().top;
-            var height = Math.round(offset / $this.periodPosition) - position;
-            if (height <= 0) {
-              height = 1;
-            }
+        // $(this.element).on('mousemove', '.jqs-day', function (event) {
+        //   if (helper) {
+        //     var offset = event.pageY - $(this).offset().top;
+        //     var height = Math.round(offset / $this.periodPosition) - position;
+        //     if (height <= 0) {
+        //       height = 1;
+        //     }
 
-            helper.css({
-              'height': height * $this.periodPosition
-            });
+        //     helper.css({
+        //       'height': height * $this.periodPosition
+        //     });
 
-            if (height >= 1) {
-              $('.jqs-period-helper-time', helper).text($this.periodInit(position, position + height));
-            } else {
-              $('.jqs-period-helper-time', helper).text('');
-            }
-          }
-        });
+        //     if (height >= 1) {
+        //       $('.jqs-period-helper-time', helper).text($this.periodInit(position, position + height));
+        //     } else {
+        //       $('.jqs-period-helper-time', helper).text('');
+        //     }
+        //   }
+        // });
 
-        var e_time;
+        // $(this.element).on('mouseup', '.jqs-day', function (event) {
+        //   if (!$(event.target).hasClass('jqs-period') && $(event.target).parents('.jqs-period').length === 0) {
+        //     var offset = event.pageY - $(this).offset().top;
+        //     var height = Math.round(offset / $this.periodPosition) - position;
+        //     if (height <= 0) {
+        //       height = 1;
+        //     }
+        //     $this.add($(this), position, height);
+        //   }
 
-        $(this.element).on('mouseup', '.jqs-day', function (event) {
-          if (!$(event.target).hasClass('jqs-period') && $(event.target).parents('.jqs-period').length === 0) {
-            var offset = event.pageY - $(this).offset().top;
-            var height = Math.round(offset / $this.periodPosition) - position;
-            if (height <= 0) {
-              height = 1;
-            }
-            $this.add($(this), position, height);
-          }
-
-          position = 0;
-          if (helper) {
-            helper.remove();
-            helper = false;
-          }
-        });
+        //   position = 0;
+        //   if (helper) {
+        //     helper.remove();
+        //     helper = false;
+        //   }
+        // });
 
 
         $(this.element).on('mouseenter', '.jqs-day', function () {
@@ -222,6 +221,7 @@
       this.generate();     
 
       this.addAll();
+      this.drag_all();
       this.settings.onInit.call(this, this.element);
     },
     /**
@@ -231,6 +231,7 @@
 
       $('<div class="schedule-title d-flex justify-content-between d-flex align-items-center"><p class="mb-0">Normal Schedule</p><button class="add-shift-btn btn btn-primary pr-5 pl-5">Add</button></div>').appendTo($(this.element));
       $('<div class="schedule-container"></div>').appendTo($(this.element));
+      $('<div class="week_container"></div>').appendTo($(this.element));
 
       $('<table class="jqs-table"><tr></tr></table>').appendTo($('.schedule-container', this.element));
 
@@ -318,28 +319,29 @@
       // new period
       var periodRemove = '';
       var time_stamp = $.now()
-      console.log(time_stamp)
       if (this.settings.mode === 'edit') {
           periodRemove = '<div class="jqs-period-remove d-flex align-items-center remove'+ time_stamp +'" title="' + this.settings.periodRemoveButton + '"><i class="fa fa-minus-square minus'+time_stamp+'" style="font-size:36px;"></i></div>';        
       }
 
       $(this.element).on('click', '.minus'+time_stamp, function () {
         if(periodBtnToggle==false) {
-          $('.minus'+ time_stamp).replaceWith('<i class="fa fa-plus-square plus'+ time_stamp +'" style="font-size:36px;"></i>' );
           periodBtnToggle=true;
+          $('.minus'+ time_stamp).replaceWith('<i class="fa fa-plus-square plus'+ time_stamp +'" style="font-size:36px;"></i>' );
+          
         } 
       });
 
       $(this.element).on('click', '.plus'+time_stamp, function () {
         if(periodBtnToggle==true){
-          $( ".plus"+time_stamp ).replaceWith('<i class="fa fa-minus-square minus'+ time_stamp +'" style="font-size:36px;"></i>' );
           periodBtnToggle=false;
+          $( ".plus"+time_stamp ).replaceWith('<i class="fa fa-minus-square minus'+ time_stamp +'" style="font-size:36px;"></i>' );
+          
         }
       })
-
+      week_position = position;
       var periodTitle = '<div class="jqs-period-title title' + time_stamp + ' d-flex align-items-center justify-content-center">' + options.title + '</div>';
       var periodTime = '<div class="jqs-period-time">' + this.periodInit(position, position + height) + '</div>';
-      var period = $('<div class="jqs-period">' +
+      var period = $('<div class="jqs-period jqs-period' + position + '" position="' + position + '">' +
         '<div class="jqs-period-container container' + time_stamp + '">' + periodTime + periodTitle + periodRemove + '</div>' +
         '</div>').css({
         'top': position * this.periodPosition,
@@ -347,14 +349,12 @@
       }).attr('id', this.uniqId()).attr('title', options.title).appendTo(parent);
 
       $(this.element).on('click', '.minus'+time_stamp, function() {
-        console.log('hello')
         $('.title'+time_stamp, this.element).text('');
         $('.title'+time_stamp, this.element).css('font-size', '0');
         $('.container'+time_stamp, this.element).css('background-color', 'grey')
       })
 
       $(this.element).on('click', '.plus'+time_stamp, function() {
-        console.log('hello')
         $('.title'+time_stamp, this.element).css('font-size', '15px');
         $('.container'+time_stamp, this.element).css('background-color', 'rgb(82, 155, 255) !important');
       })
@@ -385,14 +385,17 @@
           grid: [0, this.periodPosition],
           containment: 'parent',
           drag: function (event, ui) {
-            $('.jqs-period-time', ui.helper).text($this.periodDrag(ui));
+            var position = $(ui.helper).attr('position');
+            $('.jqs-period-time', '.jqs-period' + position).text($this.periodDrag(ui));
             $this.closeOptions();
+            $('.jqs-period' + position).css('top', Math.round(ui.position.top));
           },
           stop: function (event, ui) {
             if (!$this.isValid($(ui.helper))) {
               console.error('Invalid position');
+              var position = $(ui.helper).attr('position');
 
-              $(ui.helper).css('top', Math.round(ui.originalPosition.top));
+              $('.jqs-period' + position).css('top', Math.round(ui.position.top));
             }
           }
         }).resizable({
@@ -400,22 +403,32 @@
           containment: 'parent',
           handles: 'n, s',
           resize: function (event, ui) {
-            $('.jqs-period-time', ui.helper).text($this.periodResize(ui));
+            $('.jqs-period-time', '.jqs-period10').text($this.periodResize(ui));
+            var position = $(ui.helper).attr('position');
 
-            $this.periodText(period);
+            $this.periodText($('.jqs-period' + position));
             $this.closeOptions();
+            $('.jqs-period' + position).css({
+              'height': Math.round(ui.size.height),
+              'top': Math.round(ui.position.top)
+            });
           },
           stop: function (event, ui) {
             if (!$this.isValid($(ui.helper))) {
               console.error('Invalid position');
+              var position = $(ui.helper).attr('position');
 
-              $(ui.helper).css({
-                'height': Math.round(ui.originalSize.height),
-                'top': Math.round(ui.originalPosition.top)
+              $('.jqs-period' + position).css({
+                'height': Math.round(ui.size.height),
+                'top': Math.round(ui.position.top)
               });
             }
           }
         });
+
+        if(addBtnToggle==true){
+          $('.jqs-period-container').css('border','2px solid red', 'border-radius','5px');                    
+        } 
 
         if (this.settings.periodOptions) {
           period.click(function (event) {
@@ -428,6 +441,10 @@
             }
           });
         }
+
+        if (addBtnToggle==true) {
+          period.click();
+        }
       }
 
       this.settings.onAddPeriod.call(this, period, this.element);
@@ -438,11 +455,14 @@
     addAll: function () {
       $('.add-shift-btn', this.element).click(function () {
           addBtnToggle = true;
-          
-          console.log('hello')
       })
     },
 
+    drag_all: function () {
+      if(addBtnToggle==true) {
+
+      }
+    },
     /**
      * Remove a period
      * @param period
